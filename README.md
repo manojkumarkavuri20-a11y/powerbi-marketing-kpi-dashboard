@@ -1,6 +1,8 @@
 # 📊 Power BI Marketing KPI Dashboard
 
-> **End-to-end marketing analytics dashboard** tracking campaign performance, paid media efficiency, and audience ROI — built from real-world digital marketing experience at **BorderlessHR Inc. (InterviewHQ)**.
+> **Portfolio project built for learning purposes using a synthetic dataset. No employer, client or customer data is used.**
+
+> **End-to-end marketing analytics dashboard** tracking campaign performance, paid media efficiency, and audience ROI — built with a synthetic campaign dataset, modelled on digital marketing analytics workflows I practised during my internship at BorderlessHR Inc.
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -58,13 +60,15 @@ This project solves that by building a **single source of truth** — a Power BI
 
 ---
 
-## 💡 Key Findings & Insights
+## 💡 Illustrative Findings from Synthetic Data
 
-1. **30% higher campaign ROI** achieved by reallocating budget from low-CTR display ads to high-converting search campaigns
-2. **Facebook Ads** delivered 2.3x better CAC than Google Display for B2B SaaS audiences in the UK market
-3. **Email CTR improved by 20%** after segmenting lists by job title and sending role-specific subject lines
-4. **Peak conversion windows**: Tuesday–Thursday, 10am–2pm consistently outperformed weekend sends by 34%
-5. **A/B test finding**: Benefit-led headlines outperformed feature-led headlines by 18% CTR across all campaigns
+The dashboard is designed to surface insights of this kind. These are illustrative patterns generated from the synthetic dataset, not measured results from a real campaign:
+
+1. Reallocating budget from low-CTR display ads toward high-converting search campaigns can materially improve blended ROI
+2. Facebook Ads can outperform Google Display on CAC for certain B2B SaaS audience segments
+3. Segmenting email lists by job title with role-specific subject lines can lift email CTR
+4. Tuesday-Thursday, 10am-2pm sends can outperform weekend sends
+5. Benefit-led headlines can outperform feature-led headlines in A/B tests
 
 ---
 
@@ -74,30 +78,30 @@ This project solves that by building a **single source of truth** — a Power BI
 powerbi-marketing-kpi-dashboard/
 │
 ├── data/
-│   ├── raw/
-│   │   ├── campaign_data_2024.csv        # Google Ads + Facebook Ads export
-│   │   ├── email_performance_2024.csv    # Email platform export
-│   │   └── conversion_tracking.csv       # CRM conversion data
-│   └── processed/
-│       └── marketing_kpi_cleaned.csv     # Cleaned, merged dataset
+│ ├── raw/
+│ │ ├── campaign_data_2024.csv # Synthetic dataset (Google Ads + Facebook Ads style schema)
+│ │ ├── email_performance_2024.csv # Synthetic dataset (email platform style schema)
+│ │ └── conversion_tracking.csv # Synthetic dataset (CRM style conversion schema)
+│ └── processed/
+│ └── marketing_kpi_cleaned.csv # Cleaned, merged synthetic dataset
 │
 ├── sql/
-│   ├── campaign_performance_query.sql    # Core KPI aggregation query
-│   ├── funnel_analysis.sql               # Conversion funnel steps
-│   └── ab_test_results.sql               # A/B test significance query
+│ ├── campaign_performance_query.sql # Core KPI aggregation query
+│ ├── funnel_analysis.sql # Conversion funnel steps
+│ └── ab_test_results.sql # A/B test significance query
 │
 ├── dashboard/
-│   ├── marketing_kpi_dashboard.pbix      # Main Power BI file
-│   └── screenshots/
-│       ├── executive_summary.png
-│       ├── paid_media_deepdive.png
-│       ├── conversion_funnel.png
-│       └── email_analytics.png
+│ ├── marketing_kpi_dashboard.pbix # Main Power BI file
+│ └── screenshots/
+│ ├── executive_summary.png
+│ ├── paid_media_deepdive.png
+│ ├── conversion_funnel.png
+│ └── email_analytics.png
 │
 ├── docs/
-│   ├── data_dictionary.md                # Field definitions and sources
-│   ├── requirements.md                   # Business requirements (MoSCoW)
-│   └── findings_report.md                # Key insights and recommendations
+│ ├── data_dictionary.md # Field definitions and sources
+│ ├── requirements.md # Business requirements (MoSCoW)
+│ └── findings_report.md # Key insights and recommendations
 │
 └── README.md
 ```
@@ -109,16 +113,16 @@ powerbi-marketing-kpi-dashboard/
 ### Campaign Performance Aggregation
 ```sql
 SELECT
-    campaign_name,
-    channel,
-    SUM(spend)                                          AS total_spend,
-    SUM(clicks)                                         AS total_clicks,
-    SUM(conversions)                                    AS total_conversions,
-    SUM(revenue)                                        AS total_revenue,
-    ROUND(SUM(clicks)::DECIMAL / NULLIF(SUM(impressions), 0) * 100, 2)   AS ctr_pct,
-    ROUND(SUM(spend)::DECIMAL / NULLIF(SUM(clicks), 0), 2)               AS cpc,
-    ROUND(SUM(spend)::DECIMAL / NULLIF(SUM(conversions), 0), 2)          AS cac,
-    ROUND(SUM(revenue)::DECIMAL / NULLIF(SUM(spend), 0), 2)              AS roas
+campaign_name,
+channel,
+SUM(spend) AS total_spend,
+SUM(clicks) AS total_clicks,
+SUM(conversions) AS total_conversions,
+SUM(revenue) AS total_revenue,
+ROUND(SUM(clicks)::DECIMAL / NULLIF(SUM(impressions), 0) * 100, 2) AS ctr_pct,
+ROUND(SUM(spend)::DECIMAL / NULLIF(SUM(clicks), 0), 2) AS cpc,
+ROUND(SUM(spend)::DECIMAL / NULLIF(SUM(conversions), 0), 2) AS cac,
+ROUND(SUM(revenue)::DECIMAL / NULLIF(SUM(spend), 0), 2) AS roas
 FROM campaign_data
 WHERE campaign_date BETWEEN '2024-01-01' AND '2024-12-31'
 GROUP BY campaign_name, channel
@@ -128,53 +132,55 @@ ORDER BY roas DESC;
 ### Conversion Funnel Analysis
 ```sql
 WITH funnel AS (
-    SELECT
-        campaign_id,
-        SUM(impressions)   AS impressions,
-        SUM(clicks)        AS clicks,
-        SUM(leads)         AS leads,
-        SUM(conversions)   AS conversions
-    FROM campaign_data
-    GROUP BY campaign_id
+SELECT
+campaign_id,
+SUM(impressions) AS impressions,
+SUM(clicks) AS clicks,
+SUM(leads) AS leads,
+SUM(conversions) AS conversions
+FROM campaign_data
+GROUP BY campaign_id
 )
 SELECT
-    campaign_id,
-    impressions,
-    clicks,
-    leads,
-    conversions,
-    ROUND(clicks::DECIMAL / NULLIF(impressions, 0) * 100, 1)     AS impression_to_click_pct,
-    ROUND(leads::DECIMAL / NULLIF(clicks, 0) * 100, 1)           AS click_to_lead_pct,
-    ROUND(conversions::DECIMAL / NULLIF(leads, 0) * 100, 1)      AS lead_to_conversion_pct
+campaign_id,
+impressions,
+clicks,
+leads,
+conversions,
+ROUND(clicks::DECIMAL / NULLIF(impressions, 0) * 100, 1) AS impression_to_click_pct,
+ROUND(leads::DECIMAL / NULLIF(clicks, 0) * 100, 1) AS click_to_lead_pct,
+ROUND(conversions::DECIMAL / NULLIF(leads, 0) * 100, 1) AS lead_to_conversion_pct
 FROM funnel
 ORDER BY conversions DESC;
 ```
 
 ---
 
-## 📊 Sample Dataset Schema
+## 📊 Synthetic Dataset Schema
 
 ```
 campaign_data:
-- campaign_id        (VARCHAR)
-- campaign_name      (VARCHAR)
-- channel            (VARCHAR)  -- 'Google Ads', 'Facebook', 'Email'
-- campaign_date      (DATE)
-- impressions        (INTEGER)
-- clicks             (INTEGER)
-- leads              (INTEGER)
-- conversions        (INTEGER)
-- spend              (DECIMAL)
-- revenue            (DECIMAL)
-- audience_segment   (VARCHAR)  -- 'cold', 'warm', 'retargeting'
-- region             (VARCHAR)
+- campaign_id (VARCHAR)
+- campaign_name (VARCHAR)
+- channel (VARCHAR) -- 'Google Ads', 'Facebook', 'Email'
+- campaign_date (DATE)
+- impressions (INTEGER)
+- clicks (INTEGER)
+- leads (INTEGER)
+- conversions (INTEGER)
+- spend (DECIMAL)
+- revenue (DECIMAL)
+- audience_segment (VARCHAR) -- 'cold', 'warm', 'retargeting'
+- region (VARCHAR)
 ```
 
 ---
 
-## 🏆 Business Impact
+## 🏆 Illustrative Business Impact
 
-| Metric | Before | After | Improvement |
+This table shows the kind of before/after comparison the dashboard is designed to support, based on the synthetic dataset — not real, measured business results.
+
+| Metric | Illustrative Before | Illustrative After | Improvement |
 |--------|--------|-------|-------------|
 | Campaign ROI | Baseline | +30% | Budget reallocation from insights |
 | Email CTR | Baseline | +20% | Audience segmentation strategy |
@@ -188,9 +194,7 @@ campaign_data:
 - **Power BI Desktop** — dashboard design, DAX measures, data modelling
 - **PostgreSQL / MySQL** — data extraction and KPI aggregation
 - **Microsoft Excel** — initial data cleaning and pivot analysis
-- **Google Analytics** — web conversion tracking data source
-- **Facebook Ads Manager** — paid social data export
-- **Google Ads** — search campaign performance data
+- Schema modelled on Google Analytics, Facebook Ads Manager and Google Ads data structures (synthetic data only, no live account connections)
 
 ---
 
@@ -217,7 +221,7 @@ campaign_data:
 
 ## 🔗 Related Projects
 
-- [UK Retail Footfall Analysis](https://github.com/manojkumarkavuri20-a11y/uk-retail-footfall-analysis) — End-to-end BA project using ONS retail data
+- [UK Retail Sales & Category Performance Analysis](https://github.com/manojkumarkavuri20-a11y/uk-retail-footfall-analysis) — End-to-end BA project using ONS retail data
 - [SQL Portfolio](https://github.com/manojkumarkavuri20-a11y/sql-portfolio) — Advanced SQL for business analytics
 - [Donation Management System](https://github.com/manojkumarkavuri20-a11y/donation-management-system) — Operations process design
 
