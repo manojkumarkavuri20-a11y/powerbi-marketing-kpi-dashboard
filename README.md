@@ -1,8 +1,8 @@
-# 📊 Power BI Marketing KPI Dashboard
+# Power BI Marketing KPI Dashboard
 
-> **Portfolio project built for learning purposes using a synthetic dataset. No employer, client or customer data is used.**
+**Portfolio project built for learning purposes using a synthetic dataset. No employer, client or customer data is used.**
 
-> **End-to-end marketing analytics dashboard** tracking campaign performance, paid media efficiency, and audience ROI — built with a synthetic campaign dataset, modelled on digital marketing analytics workflows I practised during my internship at BorderlessHR Inc.
+**Marketing analytics SQL layer and dashboard design** for campaign performance, channel efficiency, and audience ROI — built with a synthetic campaign dataset, modelled on digital marketing analytics workflows I practised during my internship at BorderlessHR Inc.
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -11,229 +11,151 @@
 
 ---
 
-## 🎯 Business Problem
+## Business Problem
 
-Digital marketing teams often have data spread across Google Ads, Facebook Ads, and email platforms with **no unified view** of campaign performance. Decisions get made on gut feel rather than metrics, leading to inefficient budget allocation and missed ROI opportunities.
+Digital marketing teams often have data spread across search, social, video, display, affiliate and email platforms with no unified view of campaign performance. Decisions get made on gut feel rather than metrics, leading to inefficient budget allocation and missed ROI opportunities.
 
-This project solves that by building a **single source of truth** — a Power BI dashboard that consolidates campaign KPIs, highlights underperformers, and surfaces actionable insights for budget reallocation.
+This project addresses that with a SQL layer that consolidates campaign KPIs, highlights underperformers, and surfaces the kind of insight a Power BI dashboard built on top of it would use to drive budget reallocation decisions.
 
 ---
 
-## 📈 Key Metrics Tracked
+## Key Metrics Tracked
 
 | KPI | Definition | Business Impact |
 |-----|-----------|----------------|
 | **CTR** (Click-Through Rate) | Clicks / Impressions | Measures ad creative effectiveness |
 | **CPC** (Cost Per Click) | Spend / Clicks | Measures paid efficiency |
-| **CAC** (Customer Acquisition Cost) | Spend / New Customers | Core profitability metric |
+| **CAC** (Customer Acquisition Cost) | Spend / Conversions | Core profitability metric |
 | **ROAS** (Return on Ad Spend) | Revenue / Spend | Overall campaign ROI |
 | **Conversion Rate** | Conversions / Clicks | Funnel effectiveness |
-| **Email CTR** | Email Clicks / Emails Sent | Audience engagement metric |
 
 ---
 
-## 🏗️ Dashboard Structure
+## Dashboard Design
 
-### Page 1 — Executive Summary
-- Total spend, total revenue, blended ROAS
-- Month-over-month trend lines
-- Campaign performance at a glance (card visuals)
-- Top 3 performing campaigns vs bottom 3
-
-### Page 2 — Paid Media Deep Dive
-- Google Ads vs Facebook Ads comparison
-- CTR and CPC trends by campaign
-- Budget utilisation heatmap
-- Audience segment performance (age, gender, region)
-
-### Page 3 — Conversion Funnel
-- Impressions → Clicks → Leads → Conversions waterfall
-- Drop-off rates at each funnel stage
-- CAC by channel and campaign type
-- A/B test results comparison
-
-### Page 4 — Email Marketing Analytics
-- Open rate and CTR trends
-- Segment-level performance (by list type)
-- Best send-time analysis
-- Unsubscribe and bounce tracking
+The SQL queries in this repository are structured to feed a four-page Power BI dashboard. An executive summary page would show total spend, total revenue, blended ROAS, month-over-month trend lines, and top and bottom campaigns at a glance. A channel deep dive page would compare CTR and CPC trends across Paid Search, Social Media, Video, Display, Affiliate and Email, alongside budget utilisation by channel. A campaign drilldown page would give an individual campaign performance table with month-over-month sparklines. And a budget optimiser page would use the channel and audience-segment queries below to model what-if budget reallocation scenarios. No `.pbix` file is included in this repository; the dashboard itself was not built, and the SQL and documentation here represent the analytical layer it would sit on top of.
 
 ---
 
-## 💡 Illustrative Findings from Synthetic Data
+## Illustrative Findings from Synthetic Data
 
-The dashboard is designed to surface insights of this kind. These are illustrative patterns generated from the synthetic dataset, not measured results from a real campaign:
-
-1. Reallocating budget from low-CTR display ads toward high-converting search campaigns can materially improve blended ROI
-2. Facebook Ads can outperform Google Display on CAC for certain B2B SaaS audience segments
-3. Segmenting email lists by job title with role-specific subject lines can lift email CTR
-4. Tuesday-Thursday, 10am-2pm sends can outperform weekend sends
-5. Benefit-led headlines can outperform feature-led headlines in A/B tests
+The queries are designed to surface insights of this kind. These are illustrative patterns generated from the synthetic dataset, not measured results from a real campaign. Reallocating budget from low-CTR display ads toward high-converting search campaigns can materially improve blended ROI. An affiliate programme can outperform larger-budget channels on CAC because of its low spend and high-intent audience. Segmenting audiences by intent (cold, warm, retargeting) rather than treating a channel as a single block can reveal very different ROAS within the same channel. And B2B-oriented channels can show a much higher revenue-per-conversion than consumer channels even at lower volume.
 
 ---
 
-## 🗂️ Repository Structure
+## Repository Structure
 
 ```
 powerbi-marketing-kpi-dashboard/
-│
-├── data/
-│ ├── raw/
-│ │ ├── campaign_data_2024.csv # Synthetic dataset (Google Ads + Facebook Ads style schema)
-│ │ ├── email_performance_2024.csv # Synthetic dataset (email platform style schema)
-│ │ └── conversion_tracking.csv # Synthetic dataset (CRM style conversion schema)
-│ └── processed/
-│ └── marketing_kpi_cleaned.csv # Cleaned, merged synthetic dataset
-│
-├── sql/
-│ ├── campaign_performance_query.sql # Core KPI aggregation query
-│ ├── funnel_analysis.sql # Conversion funnel steps
-│ └── ab_test_results.sql # A/B test significance query
-│
-├── dashboard/
-│ ├── marketing_kpi_dashboard.pbix # Main Power BI file
-│ └── screenshots/
-│ ├── executive_summary.png
-│ ├── paid_media_deepdive.png
-│ ├── conversion_funnel.png
-│ └── email_analytics.png
-│
-├── docs/
-│ ├── data_dictionary.md # Field definitions and sources
-│ ├── requirements.md # Business requirements (MoSCoW)
-│ └── findings_report.md # Key insights and recommendations
-│
-└── README.md
+
+data/
+  sample_campaign_data.csv      Synthetic campaign-level dataset (20 campaigns, Jun-Aug 2025)
+
+sql/
+  campaign_performance_query.sql   KPI aggregation, channel comparison, trend and segment queries
+
+docs/
+  data_dictionary.md            Field definitions and a note on the SQL's fuller schema
+  findings_report.md            Insights and recommendations derived from the sample dataset
+
+README.md
 ```
 
 ---
 
-## 🔧 SQL Highlights
+## SQL Highlights
 
-### Campaign Performance Aggregation
+### Campaign-Level KPI Aggregation
 ```sql
 SELECT
-campaign_name,
-channel,
-SUM(spend) AS total_spend,
-SUM(clicks) AS total_clicks,
-SUM(conversions) AS total_conversions,
-SUM(revenue) AS total_revenue,
-ROUND(SUM(clicks)::DECIMAL / NULLIF(SUM(impressions), 0) * 100, 2) AS ctr_pct,
-ROUND(SUM(spend)::DECIMAL / NULLIF(SUM(clicks), 0), 2) AS cpc,
-ROUND(SUM(spend)::DECIMAL / NULLIF(SUM(conversions), 0), 2) AS cac,
-ROUND(SUM(revenue)::DECIMAL / NULLIF(SUM(spend), 0), 2) AS roas
-FROM campaign_data
-WHERE campaign_date BETWEEN '2024-01-01' AND '2024-12-31'
-GROUP BY campaign_name, channel
+c.campaign_id,
+c.campaign_name,
+c.channel,
+DATE_TRUNC('month', c.campaign_date) AS reporting_month,
+SUM(c.impressions) AS total_impressions,
+SUM(c.clicks) AS total_clicks,
+ROUND(SUM(c.spend), 2) AS total_spend,
+ROUND(SUM(c.revenue), 2) AS total_revenue,
+ROUND(SUM(c.clicks)::DECIMAL / NULLIF(SUM(c.impressions), 0) * 100, 2) AS ctr_pct,
+ROUND(SUM(c.spend)::DECIMAL / NULLIF(SUM(c.clicks), 0), 2) AS cpc,
+ROUND(SUM(c.spend)::DECIMAL / NULLIF(SUM(c.conversions), 0), 2) AS cac,
+ROUND(SUM(c.revenue)::DECIMAL / NULLIF(SUM(c.spend), 0), 2) AS roas
+FROM campaign_data c
+GROUP BY c.campaign_id, c.campaign_name, c.channel,
+DATE_TRUNC('month', c.campaign_date)
 ORDER BY roas DESC;
 ```
 
-### Conversion Funnel Analysis
+### Month-over-Month Trend
 ```sql
-WITH funnel AS (
+WITH monthly_data AS (
 SELECT
-campaign_id,
-SUM(impressions) AS impressions,
-SUM(clicks) AS clicks,
-SUM(leads) AS leads,
-SUM(conversions) AS conversions
+DATE_TRUNC('month', campaign_date) AS month,
+SUM(spend) AS total_spend,
+SUM(revenue) AS total_revenue,
+SUM(clicks) AS total_clicks,
+SUM(impressions) AS total_impressions
 FROM campaign_data
-GROUP BY campaign_id
+GROUP BY DATE_TRUNC('month', campaign_date)
 )
 SELECT
-campaign_id,
-impressions,
-clicks,
-leads,
-conversions,
-ROUND(clicks::DECIMAL / NULLIF(impressions, 0) * 100, 1) AS impression_to_click_pct,
-ROUND(leads::DECIMAL / NULLIF(clicks, 0) * 100, 1) AS click_to_lead_pct,
-ROUND(conversions::DECIMAL / NULLIF(leads, 0) * 100, 1) AS lead_to_conversion_pct
-FROM funnel
-ORDER BY conversions DESC;
+month,
+total_spend,
+total_revenue,
+ROUND(total_revenue::DECIMAL / NULLIF(total_spend, 0), 2) AS roas,
+LAG(ROUND(total_revenue::DECIMAL / NULLIF(total_spend, 0), 2))
+OVER (ORDER BY month) AS prev_month_roas
+FROM monthly_data
+ORDER BY month;
 ```
+
+See `sql/campaign_performance_query.sql` for the full set of five queries, including channel comparison, top-campaign, and audience-segment breakdowns.
 
 ---
 
-## 📊 Synthetic Dataset Schema
+## Illustrative Business Impact
 
-```
-campaign_data:
-- campaign_id (VARCHAR)
-- campaign_name (VARCHAR)
-- channel (VARCHAR) -- 'Google Ads', 'Facebook', 'Email'
-- campaign_date (DATE)
-- impressions (INTEGER)
-- clicks (INTEGER)
-- leads (INTEGER)
-- conversions (INTEGER)
-- spend (DECIMAL)
-- revenue (DECIMAL)
-- audience_segment (VARCHAR) -- 'cold', 'warm', 'retargeting'
-- region (VARCHAR)
-```
-
----
-
-## 🏆 Illustrative Business Impact
-
-This table shows the kind of before/after comparison the dashboard is designed to support, based on the synthetic dataset — not real, measured business results.
+This table shows the kind of before/after comparison the queries are designed to support, based on the synthetic dataset, not real, measured business results.
 
 | Metric | Illustrative Before | Illustrative After | Improvement |
 |--------|--------|-------|-------------|
 | Campaign ROI | Baseline | +30% | Budget reallocation from insights |
-| Email CTR | Baseline | +20% | Audience segmentation strategy |
-| CAC (Facebook) | £48 avg | £21 avg | Better audience targeting |
-| Reporting Time | 3 hrs/week | 20 min/week | Automated Power BI refresh |
+| Reporting Time | 3 hrs/week | 20 min/week | Automated Power BI refresh (once built) |
 
 ---
 
-## 🛠️ Tools & Technologies
+## Tools & Technologies
 
-- **Power BI Desktop** — dashboard design, DAX measures, data modelling
-- **PostgreSQL / MySQL** — data extraction and KPI aggregation
-- **Microsoft Excel** — initial data cleaning and pivot analysis
-- Schema modelled on Google Analytics, Facebook Ads Manager and Google Ads data structures (synthetic data only, no live account connections)
+The queries are written for plain PostgreSQL / MySQL. Power BI Desktop, DAX measures and Excel are named above as the tools I use elsewhere in this portfolio for dashboard design and initial data cleaning, and are the intended next step for this repository rather than something already built here. The schema is modelled on the shape of Google Analytics, Facebook Ads Manager and Google Ads exports, using synthetic data only with no live account connections.
 
 ---
 
-## 📋 Requirements (MoSCoW)
+## Requirements (MoSCoW)
 
-**Must Have:**
-- [ ] Unified view of CTR, CPC, CAC, ROAS across all channels
-- [ ] Month-over-month trend comparison
-- [ ] Campaign-level drill-down
-
-**Should Have:**
-- [ ] A/B test results comparison page
-- [ ] Email performance analytics
-- [ ] Automated data refresh
-
-**Could Have:**
-- [ ] Predictive spend modelling
-- [ ] Budget allocation recommender
-
-**Won't Have (this version):**
-- Real-time API connections (future iteration)
+| Priority | Requirement |
+|---|---|
+| Must have | Unified view of CTR, CPC, CAC and ROAS across all channels |
+| Must have | Month-over-month trend comparison |
+| Must have | Campaign-level drill-down |
+| Should have | Audience-segment performance breakdown |
+| Should have | Automated data refresh |
+| Could have | Predictive spend modelling |
+| Could have | Budget allocation recommender |
+| Won't have (this version) | Real-time API connections to ad platforms |
 
 ---
 
-## 🔗 Related Projects
+## Related Projects
 
-- [UK Retail Sales & Category Performance Analysis](https://github.com/manojkumarkavuri20-a11y/uk-retail-footfall-analysis) — End-to-end BA project using ONS retail data
-- [SQL Portfolio](https://github.com/manojkumarkavuri20-a11y/sql-portfolio) — Advanced SQL for business analytics
-- [Donation Management System](https://github.com/manojkumarkavuri20-a11y/donation-management-system) — Operations process design
+[UK Retail Sales & Category Performance Analysis](https://github.com/manojkumarkavuri20-a11y/uk-retail-footfall-analysis) is an end-to-end BA project using ONS retail data. [SQL Portfolio](https://github.com/manojkumarkavuri20-a11y/sql-portfolio) covers advanced SQL for business analytics. [Donation Management System](https://github.com/manojkumarkavuri20-a11y/donation-management-system) covers operations process design.
 
 ---
 
-## 👤 About
+## About
 
-Built by **Manoj Kumar Kavuri** — Graduate Market & Operations Analyst
-
-📍 Bracknell, UK | 🎓 MSc International Business (Distinction) — University of East London
+Built by **Manoj Kumar Kavuri** — Graduate Market & Operations Analyst, based in Bracknell, UK. MSc International Business (Distinction), University of East London.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/manojkumarkavuri/)
 [![GitHub](https://img.shields.io/badge/GitHub-Portfolio-black?style=flat&logo=github)](https://github.com/manojkumarkavuri20-a11y)
 
-> *Open to Market Analyst, Operations Analyst, and Business Analyst roles across the UK.*
+*Open to Market Analyst, Operations Analyst, and Business Analyst roles across the UK.*
