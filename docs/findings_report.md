@@ -1,9 +1,11 @@
 # Marketing KPI Dashboard — Findings Report
 
-**Project:** Power BI Marketing KPI Dashboard  
-**Author:** Manoj Kumar Kavuri  
-**Period Analysed:** June – August 2025  
+**Project:** Power BI Marketing KPI Dashboard
+**Author:** Manoj Kumar Kavuri
+**Period Analysed:** June – August 2025
 **Dataset:** 20 campaigns across 6 channels
+
+**Portfolio project built for learning purposes using a synthetic dataset. No employer, client or customer data is used.** All figures below are calculated directly from `data/sample_campaign_data.csv` and illustrate the kind of analysis this SQL layer is designed to support, not a real advertiser's results.
 
 ---
 
@@ -27,32 +29,21 @@ This report summarises key performance insights derived from three months of mul
 
 ## Channel Performance Summary
 
-### Top Performers by ROAS
-1. **Paid Search (Google)** — Highest ROAS (~5.1x average). Consistent volume and conversion quality.
-2. **Affiliate Programme** — Strong ROAS (~10.5x in July). Low spend, high-intent audience.
-3. **LinkedIn B2B** — High revenue per conversion (~£100). Best for B2B audience targeting.
+Paid Search (Google) posts the highest ROAS of any channel, at roughly 5.1x on average, with consistent volume and conversion quality. The Affiliate Programme is close behind with a strong ROAS of around 10.5x in July, helped by low spend and a high-intent audience. LinkedIn B2B shows the highest revenue per conversion of any channel, at around £100, making it the strongest performer for B2B audience targeting.
 
-### Channels Requiring Optimisation
-- **Google Display Network** — High impressions but low CVR (<2%). Recommend creative refresh.
-- **YouTube Pre-roll** — Large spend, moderate conversions. Test shorter ad formats (6-second bumpers).
+Two channels stand out as needing optimisation. The Google Display Network generates high impressions but a conversion rate under 2%, pointing to a creative refresh as the likely fix. YouTube Pre-roll carries a large spend for only moderate conversions, suggesting shorter ad formats such as 6-second bumpers are worth testing.
 
 ---
 
 ## Key Findings
 
-### Finding 1: Paid Search Drives Highest Volume ROI
-Google Search campaigns consistently delivered the best balance of volume and efficiency. CPC remained stable (~£0.29–0.30) while conversion rates averaged ~5%, significantly above the channel average.
+**Paid Search drives the highest volume ROI.** Google Search campaigns consistently deliver the best balance of volume and efficiency, with CPC stable at around £0.29–0.30 and conversion rates averaging roughly 5%, well above the channel average.
 
-### Finding 2: Affiliate Channel Punches Above Its Weight
-Despite the smallest budget allocation (£400–420/month), the affiliate programme generated 140–165 conversions at a CAC of ~£2.55–£2.85 — the lowest across all channels.
+**The affiliate channel punches above its weight.** Despite the smallest budget allocation of any channel (£400–420 a month), the affiliate programme generated 140–165 conversions at a CAC of roughly £2.55–£2.85, the lowest across all channels.
 
-### Finding 3: Social Media Performance is Segmented
-- **Facebook Retargeting**: Stable mid-tier performer. Retargeting cohorts show improving CVR month-over-month (+22% Jun→Jul).
-- **TikTok (Aug)**: Highest CTR (3.0%) of any campaign run. Strong brand awareness play for younger demographics.
-- **Instagram Stories**: Moderate performance; consider A/B testing static vs. video creatives.
+**Social media performance is segmented rather than uniform.** Facebook Retargeting is a stable mid-tier performer, with retargeting cohorts showing an improving conversion rate month over month (+22% from June to July). TikTok, run only in August, posted the highest CTR of any campaign at 3.0%, a strong brand-awareness result for younger demographics. Instagram Stories sits in the middle and would benefit from A/B testing static against video creative.
 
-### Finding 4: LinkedIn Shows Premium B2B Signal
-Highest revenue per conversion (£100) despite relatively low conversion volumes. Recommend increasing LinkedIn budget for B2B audience segments in Q4.
+**LinkedIn shows a premium B2B signal.** It has the highest revenue per conversion of any channel, at £100, despite relatively low conversion volumes, which supports increasing LinkedIn budget for B2B audience segments going forward.
 
 ---
 
@@ -70,13 +61,9 @@ Highest revenue per conversion (£100) despite relatively low conversion volumes
 
 ## Dashboard Pages (Power BI)
 
-1. **Executive Overview** — Total spend, revenue, ROAS, CAC at a glance
-2. **Channel Breakdown** — Side-by-side channel comparison with slicers
-3. **Campaign Drilldown** — Individual campaign performance table with sparklines
-4. **Trend Analysis** — Month-over-month KPI trends
-5. **Budget Optimiser** — What-if parameter analysis for budget reallocation
+This report and the underlying SQL are designed to feed the four dashboard pages described in the README: an executive overview of total spend, revenue, ROAS and CAC; a channel breakdown with side-by-side comparison and slicers; a campaign drilldown table with sparklines; and a month-over-month trend view. No `.pbix` file has been built yet; these findings were produced by running the SQL queries directly against the sample dataset.
 
 ---
 
-*Report generated from `data/sample_campaign_data.csv` · SQL queries in `sql/` folder*  
+*Report generated from `data/sample_campaign_data.csv` · SQL queries in `sql/` folder*
 *Manoj Kumar Kavuri · [LinkedIn](https://www.linkedin.com/in/manojkumarkavuri/) · [GitHub](https://github.com/manojkumarkavuri20-a11y)*
